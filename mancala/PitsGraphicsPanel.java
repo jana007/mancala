@@ -1,6 +1,9 @@
 package mancala;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
@@ -80,13 +83,13 @@ public class PitsGraphicsPanel extends JLayeredPane {
         	
         	playerOnePits[ i ] = new Pit();
         	playerOnePits[ i ].setPosition( j, 265 );
-        	playerOnePits[ i ].addMouseListener( pitHandler );
-        	playerOnePits[ i ].setStones();
-        	
         	playerOnePits[ i ].setTextPosition( j + 30,  260 );	// random not needed here. set base draw location
+        	playerOnePits[ i ].setStonePosition( j + 30,  260 );
+        	playerOnePits[ i ].setStones();
+        	playerOnePits[ i ].addMouseListener( pitHandler );
         	
-        	add( playerOnePits[ i ].getPitLabel(), c );
-        	setLayer( playerOnePits[ i ].getPitLabel(), 3, 3 );
+        	add( playerOnePits[ i ], c );
+        	setLayer( playerOnePits[ i ], 3, 3 );
         	
         	c.gridwidth = 1;
             c.gridheight = 0;
@@ -101,13 +104,13 @@ public class PitsGraphicsPanel extends JLayeredPane {
         	
         	playerTwoPits[ i ] = new Pit();
         	playerTwoPits[ i ].setPosition( j ,  430 );	// random not needed here. set base draw location
-        	playerTwoPits[ i ].addMouseListener( pitHandler );
-        	playerTwoPits[ i ].setStones();
-        	
         	playerTwoPits[ i ].setTextPosition( j + 30,  410 );
+        	playerTwoPits[ i ].setStonePosition( j + 30,  410 );
+        	playerTwoPits[ i ].setStones();
+        	playerTwoPits[ i ].addMouseListener( pitHandler );
         	
-        	add(playerTwoPits[i].getPitLabel(), c);
-        	setLayer( playerTwoPits[i].getPitLabel(), 3, 3 );
+        	add(playerTwoPits[i], c);
+        	setLayer( playerTwoPits[i], 3, 3 );
 
         }
         
@@ -135,22 +138,48 @@ public class PitsGraphicsPanel extends JLayeredPane {
 	private class PitListener implements MouseListener {
     	
 		private int nextPits;
-    	public void actionPerformed ( MouseEvent e ) { }
+    	public void actionPerformed ( MouseEvent e ) {
+			
+			System.out.println("source: " + e.getSource().toString( ) );
+			//int currentIndex = Arrays.asList( PitsGraphicsPanel.playerOnePits ).indexOf ( arg0.getSource() );
+			//int nextIndex = currentIndex + 1;
+			//System.out.println( currentIndex );
+			
+			//for ( int i = 0; i < PitsGraphicsPanel.playerOnePits[ currentIndex ].getStoneCount();  )
+			//	PitsGraphicsPanel.playerOnePits[ nextIndex++ ].updatePitText( 1 );
+			
+			//PitsGraphicsPanel.playerOnePits[ currentIndex ].updatePitText( 0 );
+			
+			//((Pit) e.getSource()).updatePitText( 1 );
+			//System.out.println("class name is : " + e.getSource().getClass().getName() );//.updatePitText( 1 );
+			//revalidate();
+			MancalaFrame.stonePaintGlassPane.repaint();
+		}
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			
+			//System.out.println("source: " + arg0.getSource().toString( ) );
+			//int currentIndex = Arrays.asList( PitsGraphicsPanel.playerOnePits ).indexOf ( arg0.getSource() );
+			//int nextIndex = currentIndex + 1;
+			//System.out.println( currentIndex );
 			
-			int currentIndex = Arrays.asList( PitsGraphicsPanel.playerOnePits ).indexOf ( this );
-			int nextIndex = currentIndex + 1;
-			System.out.println( currentIndex );
+			int stone = ((Pit) arg0.getSource()).getStoneCount();
+			int index =  ((Pit) arg0.getSource()).getIndexReference();
 			
-			for ( int i = 0; i < PitsGraphicsPanel.playerOnePits[ currentIndex ].getStoneCount();  )
-				PitsGraphicsPanel.playerOnePits[ nextIndex++ ].updatePitText( 1 );
+			System.out.println("Stone count is : " + stone );
+			System.out.println("index count is : " + index );
 			
-			PitsGraphicsPanel.playerOnePits[ currentIndex ].updatePitText( 0 );
+			PitsGraphicsPanel.playerOnePits[ index ].updatePitText( 0 );
+			for ( int i = 0; i <  stone; ++i  )
+				PitsGraphicsPanel.playerOnePits[ ++index ].incrementStoneCount( );
+			
+			
+			
+			//((Pit) arg0.getSource()).updatePitText( 1 );
+			System.out.println("class name is : " + arg0.getSource().getClass().getName() );//.updatePitText( 1 );
 			revalidate();
-			MancalaFrame.myGlassPane.repaint();
+			MancalaFrame.stonePaintGlassPane.repaint();
 		}
 
 		@Override
@@ -166,10 +195,11 @@ public class PitsGraphicsPanel extends JLayeredPane {
 		public void mouseReleased(MouseEvent arg0) { }
     
     }
+}
 
     // TODO FIND WAY TO READ INDEX POSITION
     // OR CREATE PIT OBJECTS... DO THIS
+	
 
-}
 
 

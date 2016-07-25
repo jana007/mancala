@@ -1,8 +1,10 @@
 package mancala;
 
 import java.awt.Image;
+import java.awt.Insets;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
@@ -19,7 +21,11 @@ public class PlayerPit extends Pit {
     			); // scale image according to dev set Dimension
 		        
 		pitIcon = new ImageIcon(pitImage);
-		pitLabel = new JLabel(pitIcon);
+		pitLabel = new JButton(  );
+        pitLabel.setIcon( pitIcon );
+        pitLabel.setBorder( null );
+        pitLabel.setContentAreaFilled(false);
+        pitLabel.setMargin(new Insets(0, 0, 0, 0));
 		stoneCount = 0; // default at 0;
 		pitText = setPitText( new JTextArea( 1, 1 ) );
         setStones();

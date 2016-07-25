@@ -1,32 +1,32 @@
 package mancala;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Insets;
 import java.util.ArrayList;
-
 import java.util.Random;
-
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-public class Pit extends Component {
+public class Pit extends JButton {
 
 	protected  Image pitImage;
 	protected  ImageIcon pitIcon;
-	protected  JLabel pitLabel;
+	protected  JButton pitLabel;
 	protected  int stoneCount;
 	protected  JTextArea pitText;
 	protected final Font font = new Font("Dialog", Font.BOLD, 20); // default font
 	protected int xStonePosition; // set where to place on y axis
 	protected int yStonePosition; // set where to place on y axis
 	protected int [] stoneIndex = new int[ 36 ];
-	protected static int stoneArrayPositionCounter = 0;
+	protected int stoneArrayPositionCounter = 0;
 	protected int textX;
 	protected int textY;
 	private Random random = new Random();
+	private int indexReference;
+	private static int pitCount = 0;
 	
 	ArrayList< Stone > stones;
 		
@@ -36,12 +36,18 @@ public class Pit extends Component {
     			Image.SCALE_DEFAULT
     			);
         pitIcon = new ImageIcon(pitImage);
-        stoneCount = 3; // default for new game
-        pitLabel = new JLabel( pitIcon );
+        
+        setIcon( pitIcon );
+        setBorder( null );
+        setContentAreaFilled(false);
+        setMargin(new Insets(0, 0, 0, 0));
+        
+        stoneCount = pitCount; // default for new game
         pitText = setPitText( new JTextArea( 1, 1 ) );
-        xStonePosition = 0;
-        yStonePosition = 0;
         stones = new ArrayList<Stone>();
+        pitCount++;
+        indexReference = pitCount - 3;
+        
         
 	}
 	
@@ -57,7 +63,7 @@ public class Pit extends Component {
 	}
 	// update pit text
 	public void updatePitText( int num ) {
-		stoneCount += num;
+		stoneCount = num;
 
 	}
 	public void incrementStoneCount(  ) {
@@ -88,6 +94,13 @@ public class Pit extends Component {
 			textY = y;
 			
 	}
+	// set stone positions
+	public void setStonePosition( int x, int y ) {
+		
+		xStonePosition = x;
+        yStonePosition = y;
+	
+	}
 	// stone count getter
 	public int getStoneCount() { return stoneCount; }
 	// pitLabel getter
@@ -98,12 +111,14 @@ public class Pit extends Component {
 	//get current Pit text
 	public JTextArea getPitText() { return pitText; }
 	// get JLabel
-	public JLabel getPitLabel() { return pitLabel; }
+	public JButton getPitLabel() { return pitLabel; }
 	
 	public int getTextX(){ return textX; } 
 	public int getTextY() { return textY; }
 	// get stone arraylist
 	public ArrayList< Stone > getStoneList() { return stones; }
+	// get index position
+	public int getIndexReference() {  return indexReference; }
 	
 	
 	/*private class PitListener implements MouseListener {
