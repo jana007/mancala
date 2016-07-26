@@ -13,11 +13,11 @@ public class Stone {
 			   "./img/blue.png", "./img/green.png",
 			   "./img/grey.png", "./img/pink.png",
 			   "./img/orange.png" }; // 5 colors
-	private static String stoneImageFile;
-	private static Random random = new Random();
-	private static int stoneX;
-	private static int stoneY;
-	private static BufferedImage stoneImage;
+	private String stoneImageFile;
+	private Random random = new Random();
+	private int stoneX;
+	private int stoneY;
+	private BufferedImage stoneImage;
 	
 	public Stone(int x, int y) {
 		
