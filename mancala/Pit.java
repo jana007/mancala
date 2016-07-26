@@ -1,6 +1,7 @@
 package mancala;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
@@ -39,8 +40,10 @@ public class Pit extends JButton {
         
         setIcon( pitIcon );
         setBorder( null );
-        setContentAreaFilled(false);
+      //  setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
+        setPreferredSize(new Dimension(40, 20));
+        setSize(new Dimension(40, 20));
         
         stoneCount = pitCount; // default for new game
         pitText = setPitText( new JTextArea( 1, 1 ) );
@@ -76,16 +79,9 @@ public class Pit extends JButton {
 	}
 	public void setStones() {
 		for ( int i = 0 ; i < getStoneCount(); ++i ) {
-			stones.add( new Stone( getxStonePosition() + random.nextInt( 45 ), getyStonePosition() ) );
+			stones.add( new Stone( (getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 45 ))));
 			
 		}
-	}
-	// set where to draw stones
-	public void setPosition( int x, int y ) {
-		
-		xStonePosition = x;
-		yStonePosition = y;
-		
 	}
 	// set where to draw stone count
 	public void setTextPosition( int x, int y ) {
