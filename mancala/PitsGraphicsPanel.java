@@ -48,20 +48,12 @@ public class PitsGraphicsPanel extends JLayeredPane {
         JLabel t = new JLabel( " " );
         
         add(t, c);
-        setLayer( t, 3, 3 );
+        setLayer( t, 3, 3 );     // setLayer( object, 
         
         add(playerPitOne.getPitLabel(), c);
         setLayer( playerPitOne.getPitLabel(), 3, 3 );
         
-        // add player pit two
-        c.fill = GridBagConstraints.VERTICAL;
-        c.gridx = 8;
-        c.gridy = 0;
-        c.gridwidth = 2;
-        c.gridheight = 3;
-        
-        add(playerPitTwo.getPitLabel(), c);
-        setLayer( playerPitOne.getPitLabel(), 3, 3 );
+
         
         playerPits = new Pit[ 12 ];
         
@@ -82,7 +74,7 @@ public class PitsGraphicsPanel extends JLayeredPane {
         	
         	playerPits[ i ] = new Pit();
         	playerPits[ i ].setTextPosition( j + 30,  260 );	// random not needed here. set base draw location
-        	playerPits[ i ].setStonePosition( j + 30,  260 );
+        	playerPits[ i ].setStonePosition( j + 10,  280 );
         	playerPits[ i ].setStones();
         	playerPits[ i ].addMouseListener( pitHandler );
         	
@@ -98,16 +90,16 @@ public class PitsGraphicsPanel extends JLayeredPane {
 
         for ( int i = 6, j = 205; i < 12; ++i, j+=100 ) {
         	
-        	c.gridx = i + 2;
+        	c.gridx = ( i - 6) + 2;
         	
         	playerPits[ i ] = new Pit();
         	playerPits[ i ].setTextPosition( j + 30,  410 );
-        	playerPits[ i ].setStonePosition( j + 30,  410 );
+        	playerPits[ i ].setStonePosition( j + 10,  440 );
         	playerPits[ i ].setStones();
         	playerPits[ i ].addMouseListener( pitHandler );
         	
         	add(playerPits[i], c);
-        	setLayer( playerPits[i], 4, 3 );
+        	setLayer( playerPits[i], 3, 2 );
 
         }
         
@@ -129,6 +121,10 @@ public class PitsGraphicsPanel extends JLayeredPane {
         
         add( playerPitTwo.getPitText(), c );
         setLayer( playerPitTwo.getPitText(), 3, 1 );
+        
+        
+        add(playerPitTwo.getPitLabel(), c);
+        setLayer( playerPitOne.getPitLabel(), 3, 3 );
         
     }
 
@@ -168,8 +164,11 @@ public class PitsGraphicsPanel extends JLayeredPane {
 			System.out.println("index count is : " + index );
 			
 			PitsGraphicsPanel.playerPits[ index ].updatePitText( 0 );
-			for ( int i = 0; i <=  stone; ++i  )
+			PitsGraphicsPanel.playerPits[ index ].setStones();
+			for ( int i = 0; i <  stone; ++i  ) {
 				PitsGraphicsPanel.playerPits[ ++index ].incrementStoneCount( );
+				PitsGraphicsPanel.playerPits[ index ].setStones();
+			}
 			
 			
 			

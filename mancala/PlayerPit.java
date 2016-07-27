@@ -25,7 +25,7 @@ public class PlayerPit extends Pit {
         pitLabel.setIcon( pitIcon );
         pitLabel.setBorder( null );
         pitLabel.setContentAreaFilled(false);
-        pitLabel.setMargin(new Insets(0, 0, 0, 0));
+        //pitLabel.setMargin(new Insets(0, 0, 0, 0));
 		stoneCount = 0; // default at 0;
 		pitText = setPitText( new JTextArea( 1, 1 ) );
         setStones();
