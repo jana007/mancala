@@ -3,6 +3,8 @@ package mancala;
 import java.awt.Image;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,6 +15,7 @@ import javax.swing.JTextArea;
 // utilizes existing methods in super class Pit
 public class PlayerPit extends Pit {
 	
+	private Random random = new Random();	
 	public PlayerPit() {
 		
 		pitImage = new ImageIcon("./img/player-pit.png").getImage()
@@ -25,12 +28,11 @@ public class PlayerPit extends Pit {
         pitLabel.setIcon( pitIcon );
         pitLabel.setBorder( null );
         pitLabel.setContentAreaFilled(false);
-        //pitLabel.setMargin(new Insets(0, 0, 0, 0));
 		stoneCount = 0; // default at 0;
 		pitText = setPitText( new JTextArea( 1, 1 ) );
         setStones();
-        xStonePosition = 0;
-        yStonePosition = 0;
+        xStonePosition = + random.nextInt( 55 );
+        yStonePosition = 260 + random.nextInt( 350 );
         stones = new ArrayList<Stone>();
 
 	}

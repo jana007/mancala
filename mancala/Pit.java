@@ -25,7 +25,7 @@ public class Pit extends JButton {
 	protected int stoneArrayPositionCounter = 0;
 	protected int textX;
 	protected int textY;
-	private Random random = new Random();
+	public Random random = new Random();
 	private int indexReference;
 	private static int pitCount = 0;
 	
@@ -42,7 +42,6 @@ public class Pit extends JButton {
         setBorder( null );
         setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
-       // setPreferredSize(new Dimension(40, 20));
         setSize(new Dimension(40, 15));
         
         stoneCount = 3; // default for new game
@@ -67,14 +66,16 @@ public class Pit extends JButton {
 	// update pit text
 	public void updatePitText( int num ) {
 		stoneCount = num;
-
+		setStones();
 	}
 	public void incrementStoneCount(  ) {
 		stoneCount ++;
+		setStones();
 
 	}
 	public void clearStones(  ) {
 		stoneCount = 0;
+		setStones();
 
 	}
 	public void setStones() {
