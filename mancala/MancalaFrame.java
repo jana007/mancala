@@ -12,7 +12,7 @@ public class MancalaFrame extends JFrame {
 	protected static Dimension boardDimension = new Dimension(1000, 800);
 	protected static Dimension minSize;
 	protected static Dimension preferredSize;
-	protected static MyGlassPane myGlassPane;
+	protected static StonePaintGlassPane stonePaintGlassPane;
 	
 	public MancalaFrame() {
 		super("Mancala - Jana McKinnon Final Project COP3252");
@@ -35,13 +35,13 @@ public class MancalaFrame extends JFrame {
 		this.setContentPane( new BoardGraphicsLabel() ); // bottom level board	
 		this.add( layeredPane ); // add pits jbuttons
 		
-		myGlassPane = new MyGlassPane( this.getContentPane() );
+		stonePaintGlassPane = new StonePaintGlassPane( this.getContentPane() );
 		
-		this.setGlassPane( myGlassPane );
+		this.setGlassPane( stonePaintGlassPane );
 		
 		
 		this.setLayout( new GridBagLayout() );
-		myGlassPane.setVisible(true);
+		stonePaintGlassPane.setVisible(true);
 		
 		setResizable(false);
 	}

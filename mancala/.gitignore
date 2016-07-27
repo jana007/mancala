@@ -12,3 +12,6 @@
 /Player.class
 /PlayerPit.class
 /Stone.class
+/StonePaintGlassPane$PitTextListener.class
+/StonePaintGlassPane.class
+/PitTextListener.class
