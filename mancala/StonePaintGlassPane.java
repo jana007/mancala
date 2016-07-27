@@ -29,9 +29,9 @@ class StonePaintGlassPane extends JComponent {
 			for (int i = 0; i < 12; ++i ) {
 				for (int j = 0; j < PitsGraphicsPanel.playerPits[ i ].getStoneCount(); ++j ) {
 					
-					g.drawImage( PitsGraphicsPanel.playerPits[ i ].getStoneList().get( 1 ).getStoneImage(),                                                    //largest x = 250	smallest x = 210; 
-							   ( PitsGraphicsPanel.playerPits[ i ].getStoneList().get( 1 ).getStoneX() ), 
-							   ( PitsGraphicsPanel.playerPits[ i ].getStoneList().get( 1 ).getStoneY() ),	
+					g.drawImage( PitsGraphicsPanel.playerPits[ i ].getStoneList().get( j ).getStoneImage(),                                                    //largest x = 250	smallest x = 210; 
+							   ( PitsGraphicsPanel.playerPits[ i ].getStoneList().get( j ).getStoneX() ), 
+							   ( PitsGraphicsPanel.playerPits[ i ].getStoneList().get( j ).getStoneY() ),	
 							null );
 					//System.out.println( "player 1 stone x: " + PitsGraphicsPanel.playerPits[ i ].getStoneList().get( j ).getStoneX() );
 					//System.out.println( "player 1 stone y: " + PitsGraphicsPanel.playerPits[ i ].getStoneList().get( j ).getStoneY() );

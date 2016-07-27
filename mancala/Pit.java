@@ -40,12 +40,12 @@ public class Pit extends JButton {
         
         setIcon( pitIcon );
         setBorder( null );
-      //  setContentAreaFilled(false);
+        setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
-        setPreferredSize(new Dimension(40, 20));
-        setSize(new Dimension(40, 20));
+       // setPreferredSize(new Dimension(40, 20));
+        setSize(new Dimension(40, 15));
         
-        stoneCount = pitCount; // default for new game
+        stoneCount = 3; // default for new game
         pitText = setPitText( new JTextArea( 1, 1 ) );
         stones = new ArrayList<Stone>();
         pitCount++;
@@ -78,8 +78,11 @@ public class Pit extends JButton {
 
 	}
 	public void setStones() {
-		for ( int i = 0 ; i < getStoneCount(); ++i ) {
-			stones.add( new Stone( (getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 45 ))));
+		for ( int i = 0 ; i < getStoneCount(); ++i ) { 
+			System.out.println("i = " + i);
+			System.out.println("getStoneCount = " + getStoneCount());
+			System.out.println("Stone x = " + (getxStonePosition() + random.nextInt( 25 )));
+			stones.add( new Stone( (getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 55 ))));
 			
 		}
 	}
