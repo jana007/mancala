@@ -3,6 +3,8 @@ package mancala;
 public class MancalaTest {
 
 	public static void main( String args[] ) {  
+		
+		Game game = new Game();
 
 		MancalaFrame mancalaFrame = new MancalaFrame();
 		MenuBar menuBar = new MenuBar();
@@ -12,6 +14,8 @@ public class MancalaTest {
 		mancalaFrame.setLocationRelativeTo(null);
 		mancalaFrame.pack();
 		mancalaFrame.setVisible(true);
+		
+				
 	}
 
 }

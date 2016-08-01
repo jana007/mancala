@@ -49,8 +49,7 @@ public class Pit extends JButton {
         stones = new ArrayList<Stone>();
         pitCount++;
         indexReference = pitCount - 3;
-        
-        
+                
 	}
 	
 	public JTextArea setPitText ( JTextArea pitText ) {
@@ -80,11 +79,7 @@ public class Pit extends JButton {
 	}
 	public void setStones() {
 		for ( int i = 0 ; i < getStoneCount(); ++i ) { 
-			System.out.println("i = " + i);
-			System.out.println("getStoneCount = " + getStoneCount());
-			System.out.println("Stone x = " + (getxStonePosition() + random.nextInt( 25 )));
 			stones.add( new Stone( (getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 55 ))));
-			
 		}
 	}
 	// set where to draw stone count
@@ -119,43 +114,5 @@ public class Pit extends JButton {
 	public ArrayList< Stone > getStoneList() { return stones; }
 	// get index position
 	public int getIndexReference() {  return indexReference; }
-	
-	
-	/*private class PitListener implements MouseListener {
-    	
-		private int nextPits;
-		
-    	public void actionPerformed ( MouseEvent e ) { }
-
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			
-			
-			int currentIndex = Arrays.asList( PitsGraphicsPanel.playerOnePits ).indexOf ( this );
-			int nextIndex = currentIndex + 1;
-			System.out.println( currentIndex );
-			
-			for ( int i = 0; i < PitsGraphicsPanel.playerOnePits[ currentIndex ].getStoneCount();  )
-				PitsGraphicsPanel.playerOnePits[ nextIndex++ ].updatePitText( 1 );
-			
-			updatePitText( 0 );
-			revalidate();
-			repaint();
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) { }
-
-		@Override
-		public void mouseExited(MouseEvent arg0) { }
-
-		@Override
-		public void mousePressed(MouseEvent arg0) { }
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) { }
-    
-    }
-*/
 	
 }

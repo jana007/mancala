@@ -11,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.util.Arrays;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 
 public class PitsGraphicsPanel extends JLayeredPane {
 	
@@ -50,9 +51,21 @@ public class PitsGraphicsPanel extends JLayeredPane {
         add(t, c);
         setLayer( t, 3, 3 );     // setLayer( object, 
         
+        // add first player pit
+        add(playerPitTwo.getPitLabel(), c);
+        setLayer( playerPitTwo.getPitLabel(), 3, 3 );
+        playerPitTwo.setTextPosition( 135, 255 );
+        
+        // add player pit two
+        c.fill = GridBagConstraints.VERTICAL;
+        c.gridx = 8;
+        c.gridy = 0;
+        c.gridwidth = 2;
+        c.gridheight = 3;
+        
         add(playerPitOne.getPitLabel(), c);
         setLayer( playerPitOne.getPitLabel(), 3, 3 );
-        
+        playerPitOne.setTextPosition( 845, 255 );
 
         
         playerPits = new Pit[ 12 ];
@@ -103,64 +116,23 @@ public class PitsGraphicsPanel extends JLayeredPane {
 
         }
         
-        c.fill = GridBagConstraints.VERTICAL;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.gridwidth = 2;
-        c.gridheight = 3;
-        
-        add( playerPitOne.getPitText(), c );
-        setLayer( playerPitOne.getPitText(), 3, 1 );
-
-        // add player pit two
-        c.fill = GridBagConstraints.VERTICAL;
-        c.gridx = 8;
-        c.gridy = 0;
-        c.gridwidth = 2;
-        c.gridheight = 3;
-        
-        add( playerPitTwo.getPitText(), c );
-        setLayer( playerPitTwo.getPitText(), 3, 1 );
-        
-        
-        add(playerPitTwo.getPitLabel(), c);
-        setLayer( playerPitOne.getPitLabel(), 3, 3 );
-        
     }
 
 	private class PitListener implements MouseListener {
     	
-		private int nextPits;
-    	public void actionPerformed ( MouseEvent e ) { }
-
+		public void actionPerformed ( MouseEvent e ) { }
+		
+    	
+    	
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 
 			
-			int stone = ((Pit) arg0.getSource()).getStoneCount();
-			int index =  ((Pit) arg0.getSource()).getIndexReference();
-			int nextIndex = index + 1;
+			int index = ((Pit) arg0.getSource()).getIndexReference();
+			int stone =  PitsGraphicsPanel.playerPits[ index ].getStoneCount( );
+			Game.playTurn( index, stone );
 			
-			PitsGraphicsPanel.playerPits[ index ].clearStones( );
 
-			for ( int i = 1; i <=  stone; ++i  ) {
-				if ( nextIndex == 6 ) {
-					PitsGraphicsPanel.playerPitOne.incrementStoneCount();
-					++i;
-				} else if ( nextIndex == 12 ) {
-					PitsGraphicsPanel.playerPitTwo.incrementStoneCount();
-					nextIndex = 0;
-					++i;
-				} 
-				if ( i <= stone ) {
-					PitsGraphicsPanel.playerPits[ nextIndex ].incrementStoneCount( );
-					++nextIndex;
-				}
-
-			}
-			
-			revalidate();
-			MancalaFrame.stonePaintGlassPane.repaint();
 		}
 
 		@Override
