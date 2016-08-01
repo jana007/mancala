@@ -25,7 +25,7 @@ public class Pit extends JButton {
 	protected int stoneArrayPositionCounter = 0;
 	protected int textX;
 	protected int textY;
-	private Random random = new Random();
+	public Random random = new Random();
 	private int indexReference;
 	private static int pitCount = 0;
 	
@@ -42,7 +42,6 @@ public class Pit extends JButton {
         setBorder( null );
         setContentAreaFilled(false);
         setMargin(new Insets(0, 0, 0, 0));
-       // setPreferredSize(new Dimension(40, 20));
         setSize(new Dimension(40, 15));
         
         stoneCount = 3; // default for new game
@@ -50,8 +49,7 @@ public class Pit extends JButton {
         stones = new ArrayList<Stone>();
         pitCount++;
         indexReference = pitCount - 3;
-        
-        
+                
 	}
 	
 	public JTextArea setPitText ( JTextArea pitText ) {
@@ -67,23 +65,21 @@ public class Pit extends JButton {
 	// update pit text
 	public void updatePitText( int num ) {
 		stoneCount = num;
-
+		setStones();
 	}
 	public void incrementStoneCount(  ) {
 		stoneCount ++;
+		setStones();
 
 	}
 	public void clearStones(  ) {
 		stoneCount = 0;
+		setStones();
 
 	}
 	public void setStones() {
 		for ( int i = 0 ; i < getStoneCount(); ++i ) { 
-			System.out.println("i = " + i);
-			System.out.println("getStoneCount = " + getStoneCount());
-			System.out.println("Stone x = " + (getxStonePosition() + random.nextInt( 25 )));
 			stones.add( new Stone( (getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 55 ))));
-			
 		}
 	}
 	// set where to draw stone count
@@ -118,43 +114,5 @@ public class Pit extends JButton {
 	public ArrayList< Stone > getStoneList() { return stones; }
 	// get index position
 	public int getIndexReference() {  return indexReference; }
-	
-	
-	/*private class PitListener implements MouseListener {
-    	
-		private int nextPits;
-		
-    	public void actionPerformed ( MouseEvent e ) { }
-
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			
-			
-			int currentIndex = Arrays.asList( PitsGraphicsPanel.playerOnePits ).indexOf ( this );
-			int nextIndex = currentIndex + 1;
-			System.out.println( currentIndex );
-			
-			for ( int i = 0; i < PitsGraphicsPanel.playerOnePits[ currentIndex ].getStoneCount();  )
-				PitsGraphicsPanel.playerOnePits[ nextIndex++ ].updatePitText( 1 );
-			
-			updatePitText( 0 );
-			revalidate();
-			repaint();
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent arg0) { }
-
-		@Override
-		public void mouseExited(MouseEvent arg0) { }
-
-		@Override
-		public void mousePressed(MouseEvent arg0) { }
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) { }
-    
-    }
-*/
 	
 }
