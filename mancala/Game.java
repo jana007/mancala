@@ -27,23 +27,23 @@ public class Game {
 				
 				
 				 if (  nextIndex  >= 12 ) {
-					
-					System.out.println("2 index is: " + index );
-					System.out.println("2 nextIndex is: " +  nextIndex );
-					PitsGraphicsPanel.playerPitTwo.incrementStoneCount();
+
+					if ( validStartIndex == 6 ) {
+						PitsGraphicsPanel.playerPitTwo.incrementStoneCount();
+						stone--;
+						Game.anotherTurn = true;
+					}
 					
 					nextIndex =  0 ;
-					System.out.println("2 j should be -1: " +  nextIndex );
-					stone--;
-					Game.anotherTurn = true;
 					
 				 } else if ( nextIndex  == 6 ) {
+
+						if ( validStartIndex == 0 ) {
+							PitsGraphicsPanel.playerPitOne.incrementStoneCount();
+							stone--;
+							Game.anotherTurn = true;
+						}
 						
-					System.out.println("1 index is: " + index );
-					System.out.println("1 nextIndex is: " + nextIndex );
-					PitsGraphicsPanel.playerPitOne.incrementStoneCount();
-					stone--;
-					Game.anotherTurn = true;
 				 }
 						
 				if  (stone != 0) {
