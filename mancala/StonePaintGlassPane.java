@@ -4,14 +4,13 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import javax.swing.JComponent;
 
-
+// class is used to paint the stones and stone counter on top of existing panes
+// glass pane so it is clear and components are able to be used beneath it
 class StonePaintGlassPane extends JComponent {
 
-
+	// constructor is evoked in the Panel class 
 	public StonePaintGlassPane( Container contentPane ) {
 		
 		// site sizes
@@ -19,7 +18,8 @@ class StonePaintGlassPane extends JComponent {
 		this.setMinimumSize( MancalaFrame.minSize );
 		
 	}
-
+	
+	// over ride paint component to paint proper stone locations
 	protected void paintComponent(Graphics g) {
        super.paintComponent( g );
 		
@@ -45,7 +45,8 @@ class StonePaintGlassPane extends JComponent {
 					PitsGraphicsPanel.playerPits[ i ].getTextY() );
 
 		}
-
+		
+		// Draw the stone count above each player pit
 		g.drawString( Integer.toString( PitsGraphicsPanel.playerPitOne.getStoneCount()),
 				PitsGraphicsPanel.playerPitOne.getTextX(),
 				PitsGraphicsPanel.playerPitOne.getTextY() );
@@ -55,16 +56,11 @@ class StonePaintGlassPane extends JComponent {
 				PitsGraphicsPanel.playerPitTwo.getTextX(),
 				PitsGraphicsPanel.playerPitTwo.getTextY() );
 		
-		// Draw player turn
+		// 	draw the turn notifier at top of page
 		g.setColor( Color.RED );
 		g.setFont( new Font("Dialog", Font.BOLD, 32)); // default font
-		
 		g.drawString( Game.getTurn(), 50, 100 );
-		
 
-		
-		//System.out.println( "playerpit 1 stones : " + PitsGraphicsPanel.playerPitOne.getStoneCount() );
-		//System.out.println( "playerpit 2 stones : " + PitsGraphicsPanel.playerPitTwo.getStoneCount() );
 
 	}
 	

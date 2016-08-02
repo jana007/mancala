@@ -8,6 +8,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.Arrays;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
@@ -19,18 +20,12 @@ public class PitsGraphicsPanel extends JLayeredPane {
    protected static PlayerPit playerPitOne = new PlayerPit();
    protected static PlayerPit playerPitTwo = new PlayerPit();
    protected static Pit [] playerPits;
-   protected static Stone [] stone =  new Stone[ 36 ];
    private PitListener pitHandler;
    
    
-    public PitsGraphicsPanel() {
+    public PitsGraphicsPanel() throws IOException {
 
     	setLayout( new GridBagLayout() );
-    	
-    	// make all the stones that will be assigned to each Pit
-    	for ( int i = 0; i < 36; ++i ) {
-
-    	}
     	
     	setOpaque(false);
     	this.setPreferredSize(boardDimension);
@@ -52,8 +47,8 @@ public class PitsGraphicsPanel extends JLayeredPane {
         setLayer( t, 3, 3 );     // setLayer( object, 
         
         // add first player pit
-        add(playerPitTwo.getPitLabel(), c);
-        setLayer( playerPitTwo.getPitLabel(), 3, 3 );
+        add(playerPitTwo, c);
+        setLayer( playerPitTwo, 3, 3 );
         playerPitTwo.setTextPosition( 135, 255 );
         
         // add player pit two
@@ -63,12 +58,12 @@ public class PitsGraphicsPanel extends JLayeredPane {
         c.gridwidth = 2;
         c.gridheight = 3;
         
-        add(playerPitOne.getPitLabel(), c);
-        setLayer( playerPitOne.getPitLabel(), 3, 3 );
+        add(playerPitOne, c);
+        setLayer( playerPitOne, 3, 3 );
         playerPitOne.setTextPosition( 845, 255 );
 
         
-        playerPits = new Pit[ 12 ];
+        playerPits = new SmallPit[ 12 ];
         
         // add pits to board and stone count
         c.fill = GridBagConstraints.VERTICAL;
@@ -85,7 +80,7 @@ public class PitsGraphicsPanel extends JLayeredPane {
         	c.gridwidth = 1;
             c.gridheight = 1;
         	
-        	playerPits[ i ] = new Pit();
+        	playerPits[ i ] = new SmallPit();
         	playerPits[ i ].setTextPosition( j + 30,  260 );	// random not needed here. set base draw location
         	playerPits[ i ].setStonePosition( j + 10,  280 );
         	playerPits[ i ].setStones();
@@ -105,7 +100,7 @@ public class PitsGraphicsPanel extends JLayeredPane {
         	
         	c.gridx = ( i - 6) + 2;
         	
-        	playerPits[ i ] = new Pit();
+        	playerPits[ i ] = new SmallPit();
         	playerPits[ i ].setTextPosition( j + 30,  410 );
         	playerPits[ i ].setStonePosition( j + 10,  440 );
         	playerPits[ i ].setStones();
@@ -121,14 +116,11 @@ public class PitsGraphicsPanel extends JLayeredPane {
 	private class PitListener implements MouseListener {
     	
 		public void actionPerformed ( MouseEvent e ) { }
-		
-    	
     	
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 
-			
-			int index = ((Pit) arg0.getSource()).getIndexReference();
+			int index = ((SmallPit) arg0.getSource()).getIndexReference();
 			int stone =  PitsGraphicsPanel.playerPits[ index ].getStoneCount( );
 			Game.playTurn( index, stone );
 			
@@ -150,14 +142,8 @@ public class PitsGraphicsPanel extends JLayeredPane {
     }
 }
 
-    // TODO FIND WAY TO READ INDEX POSITION
-    // OR CREATE PIT OBJECTS... DO THIS
-	
 
 /*
- * 
- * 
- * 
 you run into your own store, deposit one piece in it. If you run into your opponent's store, skip it.
 If the last piece you drop is in your own store, you get a free turn.
 CONTINUE READING BELOW OUR VIDEO 

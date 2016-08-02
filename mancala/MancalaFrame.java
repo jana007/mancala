@@ -4,6 +4,8 @@ package mancala;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 public class MancalaFrame extends JFrame {
@@ -14,7 +16,7 @@ public class MancalaFrame extends JFrame {
 	protected static Dimension preferredSize;
 	protected static StonePaintGlassPane stonePaintGlassPane;
 	
-	public MancalaFrame() {
+	public MancalaFrame() throws IOException {
 		super("Mancala - Jana McKinnon Final Project COP3252");
 		setSize(boardDimension);
 

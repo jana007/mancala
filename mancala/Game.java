@@ -27,9 +27,11 @@ public class Game {
 				
 				
 				 if (  nextIndex  >= 12 ) {
-
+// create new function pass in index and nextindex and i so we can grab the proper stones i is for index counter
+// nextIndex . add( index.getStone( i ) 
+					 
 					if ( validStartIndex == 6 ) {
-						PitsGraphicsPanel.playerPitTwo.incrementStoneCount();
+						PitsGraphicsPanel.playerPitTwo.incrementStoneCount( index );
 						stone--;
 						Game.anotherTurn = true;
 					}
@@ -39,7 +41,7 @@ public class Game {
 				 } else if ( nextIndex  == 6 ) {
 
 						if ( validStartIndex == 0 ) {
-							PitsGraphicsPanel.playerPitOne.incrementStoneCount();
+							PitsGraphicsPanel.playerPitOne.incrementStoneCount( index );
 							stone--;
 							Game.anotherTurn = true;
 						}
@@ -47,7 +49,7 @@ public class Game {
 				 }
 						
 				if  (stone != 0) {
-					PitsGraphicsPanel.playerPits[ nextIndex ].incrementStoneCount( );
+					PitsGraphicsPanel.playerPits[ nextIndex ].incrementStoneCount( index );
 					System.out.println("3 index is: " + index );
 					System.out.println("3 nextIndex is: " + nextIndex );
 					System.out.println("stonecount is: " + stone );
@@ -61,8 +63,7 @@ public class Game {
 			MancalaFrame.stonePaintGlassPane.repaint();
 		}
 		
-		
-		
+
 		if ( anotherTurn == true ) 
 			return true;
 		

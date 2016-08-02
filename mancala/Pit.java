@@ -1,7 +1,5 @@
 package mancala;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Insets;
@@ -9,79 +7,57 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 
-public class Pit extends JButton {
+public abstract class Pit extends JButton {
 
-	protected  Image pitImage;
-	protected  ImageIcon pitIcon;
-	protected  JButton pitLabel;
-	protected  int stoneCount;
-	protected  JTextArea pitText;
+	protected  ImageIcon pitIcon; // create an icon to use as a button
+	protected  int stoneCount; // int used to keep track of current stones in pit
 	protected final Font font = new Font("Dialog", Font.BOLD, 20); // default font
-	protected int xStonePosition; // set where to place on y axis
-	protected int yStonePosition; // set where to place on y axis
-	protected int [] stoneIndex = new int[ 36 ];
-	protected int stoneArrayPositionCounter = 0;
-	protected int textX;
-	protected int textY;
-	public Random random = new Random();
-	private int indexReference;
-	private static int pitCount = 0;
+	protected int xStonePosition; // used to set where to paint stones on x axis
+	protected int yStonePosition; // used to set where to paint stones on y axis
+	protected int textX; // used to set where to paint stones count on x axis
+	protected int textY; // used to set where to paint stones count on x axis
+	public Random random = new Random(); // random number generator for random stone placement
+	ArrayList< Stone > stones; // the array of stones in each pit
 	
-	ArrayList< Stone > stones;
-		
-	public Pit() {
-       pitImage = new ImageIcon("./img/pit.png").getImage()
-        		.getScaledInstance(100, 150,
-    			Image.SCALE_DEFAULT
-    			);
-        pitIcon = new ImageIcon(pitImage);
-        
-        setIcon( pitIcon );
-        setBorder( null );
-        setContentAreaFilled(false);
-        setMargin(new Insets(0, 0, 0, 0));
-        setSize(new Dimension(40, 15));
-        
-        stoneCount = 3; // default for new game
-        pitText = setPitText( new JTextArea( 1, 1 ) );
-        stones = new ArrayList<Stone>();
-        pitCount++;
-        indexReference = pitCount - 3;
-                
-	}
-	
-	public JTextArea setPitText ( JTextArea pitText ) {
-		
-		pitText.setText( Integer.toString( getStoneCount() ) );
-		pitText.setEditable( false );
-		pitText.setOpaque( false );
-		pitText.setFont( font );
-		pitText.setForeground(Color.WHITE);
-		
-		return pitText;
-	}
-	// update pit text
-	public void updatePitText( int num ) {
-		stoneCount = num;
-		setStones();
-	}
-	public void incrementStoneCount(  ) {
-		stoneCount ++;
-		setStones();
 
+	public Pit() {} // empty default constructor
+	
+	public Pit( Image pitImage ) { // create Pit based on what image is passed from child constructor
+		
+		pitIcon = new ImageIcon( pitImage );
+        setIcon( pitIcon );                // set Icon for button as the Pit specific image from param
+        setBorder( null );                 // remove grey border
+        setContentAreaFilled(false);       // remove grey area around button
+        setMargin(new Insets(0, 0, 0, 0)); // set margins
+        stones = new ArrayList<Stone>();   // create empty array list
+		
 	}
+	
+	// update the amount of stones contained in a pit by passing a value
+	public void updateStoneCount( int num ) {
+		stoneCount = num;
+	}
+	// update stone amount by just 1 from other index
+	public void incrementStoneCount( int fromPit ) {
+		stones.add( PitsGraphicsPanel.playerPits[ fromPit ].getStone() );
+		getStone().setStoneXY((getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 55 )));
+		PitsGraphicsPanel.playerPits[ fromPit ].decrementStoneCount();
+		stoneCount++;
+	}
+	// decrease stone size by one
+	public void decrementStoneCount() {
+		stones.remove( stones.size() - 1 );
+		stones.trimToSize();
+		stoneCount--;
+	}
+	// remove all stones from pit
 	public void clearStones(  ) {
 		stoneCount = 0;
-		setStones();
-
+		stones.clear();
 	}
-	public void setStones() {
-		for ( int i = 0 ; i < getStoneCount(); ++i ) { 
-			stones.add( new Stone( (getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 55 ))));
-		}
-	}
+	// generate the initial stones for the pit
+	public abstract void setStones();
 	// set where to draw stone count
 	public void setTextPosition( int x, int y ) {
 			
@@ -103,16 +79,13 @@ public class Pit extends JButton {
 	public int getxStonePosition() { return xStonePosition; }
 	//get yStonePosition
 	public int getyStonePosition() { return yStonePosition; }
-	//get current Pit text
-	public JTextArea getPitText() { return pitText; }
-	// get JLabel
-	public JButton getPitLabel() { return pitLabel; }
-	
-	public int getTextX(){ return textX; } 
+	// get the position for text on x axis
+	public int getTextX(){ return textX; }
+	// get the position for text on y axis
 	public int getTextY() { return textY; }
-	// get stone arraylist
+	// get last index in stone list
+	public Stone getStone() { return stones.get( stones.size() - 1 ); }
+	// get full stone array list
 	public ArrayList< Stone > getStoneList() { return stones; }
-	// get index position
-	public int getIndexReference() {  return indexReference; }
 	
 }
