@@ -56,8 +56,6 @@ public abstract class Pit extends JButton {
 		stoneCount = 0;
 		stones.clear();
 	}
-	// generate the initial stones for the pit
-	public abstract void setStones();
 	// set where to draw stone count
 	public void setTextPosition( int x, int y ) {
 			
@@ -87,5 +85,9 @@ public abstract class Pit extends JButton {
 	public Stone getStone() { return stones.get( stones.size() - 1 ); }
 	// get full stone array list
 	public ArrayList< Stone > getStoneList() { return stones; }
+	
+	
+	// abstract method, set stones used in child classes, not defined here
+	public abstract void setStones();
 	
 }

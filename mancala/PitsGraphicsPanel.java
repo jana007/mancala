@@ -1,24 +1,18 @@
 package mancala;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import java.util.Arrays;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
-import javax.swing.JOptionPane;
 
 public class PitsGraphicsPanel extends JLayeredPane {
 	
    protected  Dimension boardDimension = new Dimension(830, 300);
-   protected static PlayerPit playerPitOne = new PlayerPit();
-   protected static PlayerPit playerPitTwo = new PlayerPit();
+   protected static PlayerPit [] playerStore = new PlayerPit[ 2 ];
    protected static Pit [] playerPits;
    private PitListener pitHandler;
    
@@ -46,10 +40,14 @@ public class PitsGraphicsPanel extends JLayeredPane {
         add(t, c);
         setLayer( t, 3, 3 );     // setLayer( object, 
         
+        playerStore[ 0 ] = new PlayerPit();
+        playerStore[ 1 ] = new PlayerPit();
+        
+        
         // add first player pit
-        add(playerPitTwo, c);
-        setLayer( playerPitTwo, 3, 3 );
-        playerPitTwo.setTextPosition( 135, 255 );
+        add(playerStore[ 1 ], c);
+        setLayer( playerStore[ 1 ], 3, 3 );
+        playerStore[ 1 ].setTextPosition( 135, 255 );
         
         // add player pit two
         c.fill = GridBagConstraints.VERTICAL;
@@ -58,9 +56,9 @@ public class PitsGraphicsPanel extends JLayeredPane {
         c.gridwidth = 2;
         c.gridheight = 3;
         
-        add(playerPitOne, c);
-        setLayer( playerPitOne, 3, 3 );
-        playerPitOne.setTextPosition( 845, 255 );
+        add(playerStore[ 0 ], c);
+        setLayer( playerStore[ 0 ], 3, 3 );
+        playerStore[ 0 ].setTextPosition( 845, 255 );
 
         
         playerPits = new SmallPit[ 12 ];
@@ -115,16 +113,12 @@ public class PitsGraphicsPanel extends JLayeredPane {
 
 	private class PitListener implements MouseListener {
     	
-		public void actionPerformed ( MouseEvent e ) { }
-    	
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 
 			int index = ((SmallPit) arg0.getSource()).getIndexReference();
 			int stone =  PitsGraphicsPanel.playerPits[ index ].getStoneCount( );
 			Game.playTurn( index, stone );
-			
-
 		}
 
 		@Override
@@ -146,13 +140,6 @@ public class PitsGraphicsPanel extends JLayeredPane {
 /*
 you run into your own store, deposit one piece in it. If you run into your opponent's store, skip it.
 If the last piece you drop is in your own store, you get a free turn.
-CONTINUE READING BELOW OUR VIDEO 
-7 Hobbies That Can Make You Money
-
-0:37
-/
-3:50
- 
 If the last piece you drop is in an empty hole on your side, you capture that piece and any pieces in the hole directly opposite.
 Always place all captured pieces in your store.
 The game ends when all six spaces on one side of the Mancala board are empty.

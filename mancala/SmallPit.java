@@ -26,7 +26,7 @@ public class SmallPit extends Pit {
 		super( pitImage );
 		
 		setSize(new Dimension(40, 15));
-		stoneCount = 3; // default for new game
+		stoneCount = 4; // default for new game
 		indexReference = pitCount;
 		pitCount++;
 
@@ -57,5 +57,7 @@ public class SmallPit extends Pit {
 	}
 	// get the index reference to this Pit
 	public int getIndexReference() {  return indexReference; }	
+	// get the boolean tracker that tells whether or not pit has one stone currently indexed
+	public boolean getOneStoneCounter() { return oneStoneCounter; }
 
 }

@@ -47,15 +47,12 @@ class StonePaintGlassPane extends JComponent {
 		}
 		
 		// Draw the stone count above each player pit
-		g.drawString( Integer.toString( PitsGraphicsPanel.playerPitOne.getStoneCount()),
-				PitsGraphicsPanel.playerPitOne.getTextX(),
-				PitsGraphicsPanel.playerPitOne.getTextY() );
-		
-		
-		g.drawString( Integer.toString( PitsGraphicsPanel.playerPitTwo.getStoneCount()),
-				PitsGraphicsPanel.playerPitTwo.getTextX(),
-				PitsGraphicsPanel.playerPitTwo.getTextY() );
-		
+		for (int i = 0; i < 2; ++i ) {
+			g.drawString( Integer.toString( PitsGraphicsPanel.playerStore[ i ].getStoneCount()),
+				PitsGraphicsPanel.playerStore[ i ].getTextX(),
+				PitsGraphicsPanel.playerStore[ i ].getTextY() );
+		}
+
 		// 	draw the turn notifier at top of page
 		g.setColor( Color.RED );
 		g.setFont( new Font("Dialog", Font.BOLD, 32)); // default font

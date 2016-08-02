@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 // utilizes existing methods in super class Pit
 public class PlayerPit extends Pit {
 	
-	private static Image pitImage = new ImageIcon("./img/player-pit.png").getImage()
+	private static final Image pitImage = new ImageIcon("./img/player-pit.png").getImage()
     		.getScaledInstance(110, 290,
 			Image.SCALE_SMOOTH
 			); // scale image according to dev set Dimension
@@ -17,13 +17,7 @@ public class PlayerPit extends Pit {
 		super( pitImage );
 		stoneCount = 0; // default at 0;
 		
-
 	}
-
-	@Override
-	public void setStones() {
-		// TODO Auto-generated method stub
-		
-	}
-	
+    // not needed for this class
+	public void setStones() {}	
 }
