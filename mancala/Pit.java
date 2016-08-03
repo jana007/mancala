@@ -30,6 +30,7 @@ public abstract class Pit extends JButton {
         setBorder( null );                 // remove grey border
         setContentAreaFilled(false);       // remove grey area around button
         setMargin(new Insets(0, 0, 0, 0)); // set margins
+        setFocusPainted(false);
         stones = new ArrayList<Stone>();   // create empty array list
 		
 	}

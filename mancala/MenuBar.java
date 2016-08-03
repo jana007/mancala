@@ -20,3 +20,12 @@ public class MenuBar extends JMenuBar {
 		add(quit);
 	}
 }
+/*
+TODO this class needs editing
+	 add --
+	    rules
+	    new game
+	    high scores
+	    timer
+	    players
+*/

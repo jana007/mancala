@@ -42,6 +42,9 @@ public class Game {
 				}
 				 
 				if  (stone != 0) {
+					System.out.println("i = " + pitCounter );
+					System.out.println("nextIndex = " + nextIndex );
+					System.out.println("stone = " + stone );
 					PitsGraphicsPanel.playerPits[ nextIndex ].incrementStoneCount( index );
 					Game.anotherTurn = false;
 
@@ -118,7 +121,7 @@ public class Game {
 			if ( i % 6 == 0 )
 				emptyPits = 0;
 			if (  PitsGraphicsPanel.playerPits[ i ].getStoneCount() == 0 ) {
-				emptyPits++;
+				++emptyPits;
 			}
 			if ( emptyPits == 6 ) {
 				

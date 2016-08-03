@@ -3,7 +3,6 @@ package mancala;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.io.IOException;
-
 import javax.swing.ImageIcon;
 
 public class SmallPit extends Pit {
