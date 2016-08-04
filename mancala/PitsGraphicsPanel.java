@@ -13,7 +13,7 @@ public class PitsGraphicsPanel extends JLayeredPane {
 	
    protected  Dimension boardDimension = new Dimension(830, 300);
    protected static PlayerPit [] playerStore = new PlayerPit[ 2 ];
-   protected static Pit [] playerPits;
+   protected static SmallPit [] playerPits;
    private PitListener pitHandler;
    
    

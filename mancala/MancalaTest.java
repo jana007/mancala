@@ -1,29 +1,28 @@
 package mancala;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.io.IOException;
 
-import javax.swing.JEditorPane;
-import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 
 // Main method, creates frame and runs game
 public class MancalaTest {
 	protected static StonePaintGlassPane stonePaintGlassPane; // glass pain for repainting stones
+	protected static MancalaFrame mancalaFrame;
 
 	public static void main( String args[] ) throws IOException {  // IOException thrown in case of IO error
 		
-		MancalaFrame mancalaFrame = new MancalaFrame(); // create Mancala Frame
+		
+		mancalaFrame = new MancalaFrame(); // create Mancala Frame
 		MenuBar menuBar = new MenuBar(); // Create Menu bar
 		
 		mancalaFrame.setDefaultCloseOperation( MancalaFrame.EXIT_ON_CLOSE ); // exit on close
 		mancalaFrame.setJMenuBar(menuBar); // add menu bar
 		mancalaFrame.setLocationRelativeTo(null); // open in center of screen
-		
-		// let's try a splash screen
-		
-		//mancalaFrame.setContentPane( new  );
+		MancalaTest.newGame();
+				
+	}
+	
+	public static void newGame() throws IOException {
 		
 		// Content pane is the back board
 		mancalaFrame.setContentPane( new BoardGraphicsLabel() ); // bottom level board	
@@ -46,8 +45,6 @@ public class MancalaTest {
 		mancalaFrame.setResizable(false);
 		mancalaFrame.pack(); // set all proper sizes to prefered size
 		mancalaFrame.setVisible(true); // set visible
-		
-				
 	}
 
 }

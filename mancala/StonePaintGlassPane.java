@@ -65,7 +65,7 @@ class StonePaintGlassPane extends JComponent {
 		// 	draw the turn notifier at top of page
 		g.setColor( Color.RED );
 		g.setFont( new Font("Dialog", Font.BOLD, 32)); // default font
-		g.drawString( Game.getTurn(), 50, 100 );
+		g.drawString( Game.getTurn(), 50, 150 );
 
 
 	}
