@@ -22,45 +22,48 @@ public class Game {
 														// so user turn won't switch on empty pit
 			int pitCounter;
 			int nextIndex = index + 1;
+			boolean aroundBoard = false;
 			for ( pitCounter = 0; stone > 0; ++pitCounter, ++nextIndex, --stone ) {
 				
-				
-				
-				if (  nextIndex  >= 12 && validStartIndex == 6 ) {
-					 
-					PitsGraphicsPanel.playerStore[ turn ].incrementStoneCount( index );
-					stone--;
-					Game.anotherTurn = true;
+
+				if (  nextIndex  >= 12 ) {
+					if ( validStartIndex == 6 ) {
+						PitsGraphicsPanel.playerStore[ turn ].incrementStoneCount( index );
+						stone--;
+						Game.anotherTurn = true;
+					}
+					else { // if this is not player's pit around board is true and bonus pit may be enabled
+						aroundBoard = true;
+					}
 					nextIndex = 0;
 						
-				} else if ( nextIndex  == 6 && validStartIndex == 0) {
-
-					PitsGraphicsPanel.playerStore[ turn ].incrementStoneCount( index );
-					stone--;
-					Game.anotherTurn = true;
+				} else if ( nextIndex  == 6 ) {
 					
+					if ( validStartIndex == 0 ) {
+						PitsGraphicsPanel.playerStore[ turn ].incrementStoneCount( index );
+						stone--;
+						Game.anotherTurn = true;
+				   } else  // if this is not player's pit around board is true and bonus pit may be enabled
+						aroundBoard = true;
 				}
 				 
 				if  (stone != 0) {
-					System.out.println("i = " + pitCounter );
-					System.out.println("nextIndex = " + nextIndex );
-					System.out.println("stone = " + stone );
 					PitsGraphicsPanel.playerPits[ nextIndex ].incrementStoneCount( index );
 					Game.anotherTurn = false;
 
 				}
 			}
-			MancalaFrame.stonePaintGlassPane.repaint();
-			checkForBonus( ( index + pitCounter ) % 12 );
-			MancalaFrame.stonePaintGlassPane.repaint();
+		
+
+			if ( aroundBoard == true && ( ( ( index + pitCounter ) % 12 ) < ( validStartIndex + 5 ) ) ) {
+			
+				checkForBonus( ( index + pitCounter ) % 12 );
+			}
+			MancalaTest.stonePaintGlassPane.repaint();
 			checkForWinner();
 		}
-		
-		
-		
 		if ( anotherTurn == true ) 
 			return true;
-		
 		else {
 		
 			turn = ( turn + 1 ) % 2; // turn is either 0 ( for 1 ) or 1 ( for 2 )
@@ -68,7 +71,6 @@ public class Game {
 			anotherTurn = false; // enable turn again
 			return false; // player turn is over
 		}
-
 	}
 	
 	public static boolean checkIndex(int indexClicked ) {
@@ -113,6 +115,8 @@ public class Game {
 			JOptionPane.showMessageDialog( null, "Empty pit bonus!\n" + 
 					( i + 1 ) + " additional stones were added to your store" );
 			
+			MancalaTest.stonePaintGlassPane.repaint();
+			
 		}
 	}
 	public static boolean checkForWinner() {
@@ -125,7 +129,7 @@ public class Game {
 			}
 			if ( emptyPits == 6 ) {
 				
-				
+				collectEndGameBonus( ( i == 5 ) ? 6 : 0 ); 
 				
 				JOptionPane.showMessageDialog( null, "Game Over!\nPlayer " +
 						(( PitsGraphicsPanel.playerStore[ 0 ].getStoneCount() > PitsGraphicsPanel.playerStore[ 1 ].getStoneCount() ) ? "one" : "two" ) + " Wins!" );
@@ -133,5 +137,14 @@ public class Game {
 			}
 		}
 		return false;
+	}
+	
+	public static void collectEndGameBonus ( int bonusSideIndexStart ) {
+		
+		for (int i = bonusSideIndexStart; i < 6; ++i ) {
+			while ( PitsGraphicsPanel.playerPits[ i ].getStoneCount() != 0) 
+				PitsGraphicsPanel.playerStore[ ( bonusSideIndexStart % 5 ) ].incrementStoneCount( i );
+		}
+		MancalaTest.stonePaintGlassPane.repaint();
 	}
 }
