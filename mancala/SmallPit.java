@@ -30,17 +30,6 @@ public class SmallPit extends Pit {
 		pitCount++;
 
 	}
-
-	// set the boolean if a pit contains zero stones and an opponent places one stone
-	// this will be used prior to adding stones
-	public void setOneStoneCounter() {
-		
-		if ( stoneCount == 0 ) 
-			oneStoneCounter = true;
-		else
-			oneStoneCounter = false;
-
-	}
 	
 	// generate the initial stones for the small pit
 	public void setStones() {
@@ -53,6 +42,13 @@ public class SmallPit extends Pit {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void incrementStoneCount( int fromPit ) {
+		stones.add( PitsGraphicsPanel.playerPits[ fromPit ].getStone() );
+		getStone().setStoneXY((getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 55 )));
+		PitsGraphicsPanel.playerPits[ fromPit ].decrementStoneCount();
+		stoneCount++;
 	}
 	// get the index reference to this Pit
 	public int getIndexReference() {  return indexReference; }	

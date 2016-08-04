@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JComponent;
 
+
+
 // class is used to paint the stones and stone counter on top of existing panes
 // glass pane so it is clear and components are able to be used beneath it
 class StonePaintGlassPane extends JComponent {
@@ -48,6 +50,13 @@ class StonePaintGlassPane extends JComponent {
 		
 		// Draw the stone count above each player pit
 		for (int i = 0; i < 2; ++i ) {
+			for (int j = 0; j < PitsGraphicsPanel.playerStore[ i ].getStoneCount(); ++j ) {
+				
+				g.drawImage( PitsGraphicsPanel.playerStore[ i ].getStoneList().get( j ).getStoneImage(),                                                    //largest x = 250	smallest x = 210; 
+						   ( PitsGraphicsPanel.playerStore[ i ].getStoneList().get( j ).getStoneX() ), 
+						   ( PitsGraphicsPanel.playerStore[ i ].getStoneList().get( j ).getStoneY() ),	
+						null );
+			}
 			g.drawString( Integer.toString( PitsGraphicsPanel.playerStore[ i ].getStoneCount()),
 				PitsGraphicsPanel.playerStore[ i ].getTextX(),
 				PitsGraphicsPanel.playerStore[ i ].getTextY() );

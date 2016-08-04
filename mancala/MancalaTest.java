@@ -1,7 +1,12 @@
 package mancala;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.io.IOException;
+
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 // Main method, creates frame and runs game
 public class MancalaTest {
@@ -35,8 +40,6 @@ public class MancalaTest {
 				// keep frame one size so we don't have to calculate resizing
 				// sorry for the laziness
 		mancalaFrame.setResizable(false);
-		
-		
 		mancalaFrame.pack(); // set all proper sizes to prefered size
 		mancalaFrame.setVisible(true); // set visible
 		

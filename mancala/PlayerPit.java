@@ -20,4 +20,11 @@ public class PlayerPit extends Pit {
 	}
     // not needed for this class
 	public void setStones() {}	
+	
+	public void incrementStoneCount( int fromPit ) {
+		stones.add( PitsGraphicsPanel.playerPits[ fromPit ].getStone() );
+		getStone().setStoneXY((getxStonePosition() + random.nextInt( 50 )), (getyStonePosition() + random.nextInt( 150 )));
+		PitsGraphicsPanel.playerPits[ fromPit ].decrementStoneCount();
+		stoneCount++;
+	}
 }

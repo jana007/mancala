@@ -40,18 +40,14 @@ public abstract class Pit extends JButton {
 		stoneCount = num;
 	}
 	// update stone amount by just 1 from other index
-	public void incrementStoneCount( int fromPit ) {
-		stones.add( PitsGraphicsPanel.playerPits[ fromPit ].getStone() );
-		getStone().setStoneXY((getxStonePosition() + random.nextInt( 45 )), (getyStonePosition() + random.nextInt( 55 )));
-		PitsGraphicsPanel.playerPits[ fromPit ].decrementStoneCount();
-		stoneCount++;
-	}
+	public abstract void incrementStoneCount( int fromPit );
 	// decrease stone size by one
 	public void decrementStoneCount() {
 		stones.remove( stones.size() - 1 );
 		stones.trimToSize();
 		stoneCount--;
 	}
+ 
 	// remove all stones from pit
 	public void clearStones(  ) {
 		stoneCount = 0;

@@ -48,6 +48,7 @@ public class PitsGraphicsPanel extends JLayeredPane {
         add(playerStore[ 1 ], c);
         setLayer( playerStore[ 1 ], 3, 3 );
         playerStore[ 1 ].setTextPosition( 135, 255 );
+        playerStore[ 1 ].setStonePosition( 110, 300 );
         
         // add player pit two
         c.fill = GridBagConstraints.VERTICAL;
@@ -59,6 +60,7 @@ public class PitsGraphicsPanel extends JLayeredPane {
         add(playerStore[ 0 ], c);
         setLayer( playerStore[ 0 ], 3, 3 );
         playerStore[ 0 ].setTextPosition( 845, 255 );
+        playerStore[ 0 ].setStonePosition( 815, 300 );
 
         
         playerPits = new SmallPit[ 12 ];
@@ -79,7 +81,7 @@ public class PitsGraphicsPanel extends JLayeredPane {
             c.gridheight = 1;
         	
         	playerPits[ i ] = new SmallPit();
-        	playerPits[ i ].setTextPosition( j + 30,  260 );	// random not needed here. set base draw location
+        	playerPits[ i ].setTextPosition( j + 30,  260 );
         	playerPits[ i ].setStonePosition( j + 10,  280 );
         	playerPits[ i ].setStones();
         	playerPits[ i ].addMouseListener( pitHandler );
