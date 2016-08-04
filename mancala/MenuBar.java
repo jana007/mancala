@@ -3,13 +3,6 @@ package mancala;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -17,21 +10,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+// create the menu and menuItems for the frame
 public class MenuBar extends JMenuBar {
 	
-	private JMenu file;
-	private JMenu options;
-	private JMenu quit;
-	private JMenuItem history;
-	private JMenuItem quitItem;
-	private JMenuItem highScores;
-	private JMenuItem rules;
-	protected static HighScoreHandler highScoreList = new HighScoreHandler();
+	private JMenu options; // display game options
+	private JMenu quit; // quit the app
+	private JMenuItem history; // display current game history
+	private JMenuItem quitItem; // quit game
+	private JMenuItem highScores; // list high scores
+	private JMenuItem rules; // display rules
+	protected static HighScoreHandler highScoreList = new HighScoreHandler(); // handler for high score list
 	
-	
+	// create menu bar and menu items
 	public MenuBar() {
 		super();
-		//file = new JMenu("File");
 		options = new JMenu("Options");
 		quit = new JMenu("quit");
 		
@@ -116,19 +108,17 @@ public class MenuBar extends JMenuBar {
 			        	    textArea.setWrapStyleWord(true); 
 			        	    scrollPane.setPreferredSize( new Dimension( 500, 500 ) );
 			        	   String gameRules = 
-"\nThe Mancala 'board' is made up of two rows of six holes, or pits, each.\n" + 
-"\nFour pieces -- marbles or stones -- are placed in each of the 12 holes. The color of the pieces is irrelevant.\n"+
-"\nEach player has a 'store'. Player one's store is on the right, player two's store is on the left\n"+
-"\nPlayer one may only interact with the pits on the top of the board\n"+
-"\nPlayer two may only interact with the pits on the bottom of the board\n"+
-"\nThe game begins with one player picking up all of the pieces in any one of the holes on his side.\n"+
-"\nMoving clockwise, the player deposits one of the stones in each hole until the stones run out.\n"+
-"\nIf you run into your own store, deposit one piece in it. If you run into your opponent's store, skip it.\n"+
-"\nIf the last piece you drop is in your own store, you get a free turn.\n"+
-"\nThe game ends when all six spaces on one side of the Mancala board are empty.\n"+
-"\nThe player who still has pieces on their side of the board when the game ends captures all of those pieces.\n"
-
-;
+								"\nThe Mancala 'board' is made up of two rows of six holes, or pits, each.\n" + 
+								"\nFour pieces -- marbles or stones -- are placed in each of the 12 holes. The color of the pieces is irrelevant.\n"+
+								"\nEach player has a 'store'. Player one's store is on the right, player two's store is on the left\n"+
+								"\nPlayer one may only interact with the pits on the top of the board\n"+
+								"\nPlayer two may only interact with the pits on the bottom of the board\n"+
+								"\nThe game begins with one player picking up all of the pieces in any one of the holes on his side.\n"+
+								"\nMoving clockwise, the player deposits one of the stones in each hole until the stones run out.\n"+
+								"\nIf you run into your own store, deposit one piece in it. If you run into your opponent's store, skip it.\n"+
+								"\nIf the last piece you drop is in your own store, you get a free turn.\n"+
+								"\nThe game ends when all six spaces on one side of the Mancala board are empty.\n"+
+								"\nThe player who still has pieces on their side of the board when the game ends captures all of those pieces.\n";
 			        	   rulesText.setText( gameRules );
 			        	   rulesText.setEditable(false);
 			        	   System.out.println(gameRules);
@@ -142,23 +132,6 @@ public class MenuBar extends JMenuBar {
 		
 		options.add(rules);
 		
-		JMenuItem newGame = new JMenuItem("New Game");
-		newGame.addActionListener(
-				new ActionListener() {// anonymous inner class
-			           // display new internal window
-			           public void actionPerformed( ActionEvent event ) {
-			        	   try {
-							MancalaTest.newGame();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-			           } // end method actionPerformed
-			        } // end anonymous inner class
-		); // end call to addActionListener
-		
-		//file.add(newGame);
 	}
 		
 }

@@ -14,7 +14,6 @@ public class MancalaTest {
 		
 		mancalaFrame = new MancalaFrame(); // create Mancala Frame
 		MenuBar menuBar = new MenuBar(); // Create Menu bar
-		
 		mancalaFrame.setDefaultCloseOperation( MancalaFrame.EXIT_ON_CLOSE ); // exit on close
 		mancalaFrame.setJMenuBar(menuBar); // add menu bar
 		mancalaFrame.setLocationRelativeTo(null); // open in center of screen

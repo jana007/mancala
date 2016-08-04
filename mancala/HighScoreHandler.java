@@ -10,25 +10,26 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// Class enables high scores to be listed from Serializable HighScore class
 public class HighScoreHandler {
 	
-	private ArrayList<HighScore> highScores;
-	private static final String file = "highscores.txt";
+	private ArrayList<HighScore> highScores; // list of HighScores
+	private static final String file = "highscores.txt"; // const file location
 	
+	// creates an arrayList
+	// reads in existing scores
+	// sorts and saves in case any additional scores have been added
 	public HighScoreHandler() {
 		highScores = new ArrayList< HighScore >();
 		highScores.ensureCapacity( 10 );
 		loadHighScores();
 		highScores.trimToSize();
 		
-		for ( int i = 12; i > 4; --i )
-			highScores.remove(i);
-		highScores.trimToSize();
-		
 		sortScores();
 		saveHighScores();
 		
 	}
+	// save the scores to a file
      public void saveHighScores( ) {
 
 	    // try to print to file, throws IOException
@@ -47,6 +48,7 @@ public class HighScoreHandler {
 	    }
 
 	}
+     // load existing scores from file
      public void loadHighScores( ) {
 
          // create a read in object
@@ -80,11 +82,13 @@ public class HighScoreHandler {
  	    }
          
      }
+     // add a score to file
      public void addScore( HighScore hs ) {
     	 
     	 highScores.add( hs );
 
      }
+     // format the score list for printing
      public String toString() {
     	 String scoreList = "";
     	 
@@ -97,7 +101,7 @@ public class HighScoreHandler {
     	 
     	 return scoreList;
      }
-     
+     // sort scores by total points
      public void sortScores() {
     	 
     	 boolean sorted = true;
@@ -108,7 +112,6 @@ public class HighScoreHandler {
     	 while ( sorted ) {
     		sorted = false;
     		for (int i = 0; i < hsArray.length - 1; ++i ) {
-    			System.out.println("size = " + hsArray.length );
     			if ( hsArray[i].getScore()  < hsArray[ i + 1 ].getScore() ) {
     				swapTemp = hsArray[ i ];
     				hsArray[ i ] = hsArray[ i + 1 ];
@@ -116,10 +119,8 @@ public class HighScoreHandler {
     				sorted = true;
          		}
     	     }
-    	 
           }
     	 highScores.clear();
     	 highScores = new ArrayList< HighScore >( Arrays.asList( hsArray));
-       }
-     
+     }
 }

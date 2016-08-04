@@ -3,19 +3,22 @@ package mancala;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+// this class includes the logic and rules for the game
 public class Game {
 
-	private static int turn;
-	private static boolean anotherTurn;
-	private static int validStartIndex; // default at zero
-	private static boolean aroundBoard;
+	private static int turn; // keeps track of which player's turn it is
+	private static boolean anotherTurn; // check whether or not player gets another turn
+	private static int validStartIndex; // marks the player's start index
+	private static boolean aroundBoard; // checks if user has gone entirely around board once for the empty pit bonus
 	private static int pitCounter; // keeps track of how may pits have had stones placed. Used for finding adjacent pit for bonus
-	private static int nextIndex;
-	private static String history = "";
-	private static int turnCounter = 0; 
-	private static int stoneHistory = 0;
+	private static int nextIndex; // next index is the next pit that will got a stone placed in it
+	private static String history = ""; // String used to show history in options menu
+	private static int turnCounter = 0;  // count turns for high score list
+	private static int stoneHistory = 0; // used in the history message to display how many stones were moved this turn
 
-	
+	// default consructor
+	// turn = 0 aka player 1's turn
+	// their pits start at index 0
 	public  Game() {
 		
 		turn = 0;
@@ -24,6 +27,8 @@ public class Game {
 		
 	}
 	
+	// method used to mark whether or not a turn was successful 
+	// updates all pits and returns true if player gets another turn
 	public static boolean playTurn ( int index, int stone ) {
 		 
 		
@@ -78,30 +83,30 @@ public class Game {
 				MancalaTest.stonePaintGlassPane.repaint(); // repaint after each loop with a slight delay
 			}// end regular playTurn loop
 			playHistory( index, stoneHistory );
-		}
-		// if the player gets another turn, return true to continue game loop
-		checkForWinner();
-		if ( anotherTurn == true ) 
-			return true;
-		// else 
-		else if ( aroundBoard == true ) {
-			// ( index + pitCounter ) % 12 will return the final Pit index in which a stone was placed
-			int lastPitIndex = ( index + pitCounter ) % 12 ;
-			// if that index is less than the current player's maximum pit index and greater than their minimum
-			// also check if aroundBoard is true and if final pit has only 1 stone currently
-			System.out.println("aroundBoard = true");
 			
-			if ( lastPitIndex < ( validStartIndex + 6 ) && lastPitIndex >= validStartIndex
-					&& PitsGraphicsPanel.playerPits[ lastPitIndex ].getStoneCount() == 1) {
-				System.out.println("validstart index = true");
-				checkForBonus( lastPitIndex );
+			// else 
+			if ( aroundBoard == true ) {
+				// ( index + pitCounter ) % 12 will return the final Pit index in which a stone was placed
+				int lastPitIndex = ( index + pitCounter ) % 12 ;
+				// if that index is less than the current player's maximum pit index and greater than their minimum
+				// also check if aroundBoard is true and if final pit has only 1 stone currently
+				
+				if ( lastPitIndex < ( validStartIndex + 6 ) && lastPitIndex >= validStartIndex
+						&& PitsGraphicsPanel.playerPits[ lastPitIndex ].getStoneCount() == 1) {
+					checkForBonus( lastPitIndex );
+				}
 			}
+			checkForWinner();
+			if ( anotherTurn == true ) 
+				return true;
+			aroundBoard = false; // reflag as false
+			anotherTurn = false;
+			turn = ( turn + 1 ) % 2; // turn is either 0 ( for 1 ) or 1 ( for 2 )
+			validStartIndex = ( validStartIndex + 6 ) % 12 ; // valid start is either 0 or 6
+			 
 		}
-		aroundBoard = false; // reflag as false
-		anotherTurn = false;
-		turn = ( turn + 1 ) % 2; // turn is either 0 ( for 1 ) or 1 ( for 2 )
-		validStartIndex = ( validStartIndex + 6 ) % 12 ; // valid start is either 0 or 6
 		return false; // player turn is over
+		// if the player gets another turn, return true to continue game loop
 	}// end playTurn
 	
 	public static boolean checkIndex(int indexClicked ) {
@@ -116,14 +121,16 @@ public class Game {
 
 	}
 	
+	// updates the turn notifier in top left corner
 	public static String getTurn() {
 		String turnText = String.format( "Player %s %s",
 				( ( turn == 0 ) ? "one" : "two" ) ,  // if turn is 0 print one, otherwise print two
 				( ( anotherTurn == true ) ? "go again" : "turn" )); // if player has a second turn print go again
 				
-		return turnText;
+		return turnText; 
 	}
 	
+	// check for bonus stones if player has circled the board and landed in their own empty pit
 	public static void checkForBonus( int finalPitIndex ) {
 		
 		int oppositeIndex = ( 12 - ( finalPitIndex + 1 ) ); // player steals from opponent's pit next to theirs, this calculates index
@@ -139,9 +146,11 @@ public class Game {
 		JOptionPane.showMessageDialog( null, "Empty pit bonus!\n" + 
 				( bonusStones + 1 ) + " additional stones were added to your store" );
 		
-		MancalaTest.stonePaintGlassPane.repaint();
+		// repaint after bonus is calculated
+		MancalaTest.stonePaintGlassPane.repaint(); 
 
 	}
+	// checks if either side has 6 empty pits to end game
 	public static boolean checkForWinner() {
 		
 		for (int i = 0, emptyPits = 0; i < 12; ++i ) {
@@ -150,40 +159,43 @@ public class Game {
 			if (  PitsGraphicsPanel.playerPits[ i ].getStoneCount() == 0 ) {
 				++emptyPits;
 			}
+
 			if ( emptyPits == 6 ) {
-				
+				// if one side has empty pits, then the other side will receive the bonus stones left on their side
+				// if i is at 5 or more then player two receives the bonus stones, otherwise player one 
 				collectEndGameBonus( ( i >= 5 ) ? 6 : 0 ); 
 				
+				// winner is calculated based on which user has more stones after bonus pits
 				String winner = ( PitsGraphicsPanel.playerStore[ 0 ].getStoneCount() > PitsGraphicsPanel.playerStore[ 1 ].getStoneCount() ) ? "one" : "two";
 				int winnerStoneAmount = PitsGraphicsPanel.playerStore[ ( winner == "one" ) ? 0 : 1 ].getStoneCount();
 				
 				JOptionPane.showMessageDialog( null, "Game Over!\nPlayer " + winner + " Wins!" );
 				
+  				// displays input for user to enter their name for the high score list 
 				 JFrame frame = new JFrame();
 				 String winnerName = JOptionPane.showInputDialog(frame, "New high score!\nPlayer " + winner + ", please enter your name");
-				 
+				 // add new Highscore to list
 				 MenuBar.highScoreList.addScore( new HighScore( winnerName, turnCounter, winnerStoneAmount));
 				 MenuBar.highScoreList.sortScores();
 				 MenuBar.highScoreList.saveHighScores();
-				 
-				// highscoreList.loadHighScores( );
 				
 				return true;
 			}
 		}
 		return false;
 	}
-	
+	// collect end game bonus stones from non empty side
 	public static void collectEndGameBonus( int bonusSideIndexStart ) {
 		
 		for (int i = bonusSideIndexStart; i < ( bonusSideIndexStart + 5 ); i++ ) {
-			System.out.println(" i = " + i);
 			while ( PitsGraphicsPanel.playerPits[ i ].getStoneCount() > 0) 
 				PitsGraphicsPanel.playerStore[ ( bonusSideIndexStart % 5 ) ].incrementStoneCount( i );
 		}
 		MancalaTest.stonePaintGlassPane.repaint();
 	}
 	
+	// add the string variables to play history
+	// can be viewed under options
 	public static void playHistory( int index, int stone ) {
 		
 		
@@ -197,8 +209,6 @@ public class Game {
 		}
 		history += String.format("Player one store has %d stones\n",  PitsGraphicsPanel.playerStore[ 0 ].getStoneCount() );
 		history += String.format("Player two store has %d stones\n\n",  PitsGraphicsPanel.playerStore[ 1 ].getStoneCount() );
-		
-		System.out.println( history );
 		
 }
 	public static String getHistory() { return history; }
