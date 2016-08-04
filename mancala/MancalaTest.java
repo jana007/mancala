@@ -21,6 +21,10 @@ public class MancalaTest {
 		mancalaFrame.setJMenuBar(menuBar); // add menu bar
 		mancalaFrame.setLocationRelativeTo(null); // open in center of screen
 		
+		// let's try a splash screen
+		
+		//mancalaFrame.setContentPane( new  );
+		
 		// Content pane is the back board
 		mancalaFrame.setContentPane( new BoardGraphicsLabel() ); // bottom level board	
 		mancalaFrame.add( new PitsGraphicsPanel() ); // add pits jbuttons from custom layered pane
