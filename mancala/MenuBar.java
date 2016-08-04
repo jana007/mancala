@@ -26,6 +26,7 @@ public class MenuBar extends JMenuBar {
 	private JMenuItem quitItem;
 	private JMenuItem highScores;
 	private JMenuItem rules;
+	protected static HighScoreHandler highScoreList = new HighScoreHandler();
 	
 	
 	public MenuBar() {
@@ -91,9 +92,8 @@ public class MenuBar extends JMenuBar {
 			       		   JScrollPane scorePane = new JScrollPane(scoreTextArea);  
 			        	   // textArea.setWrapStyleWord(true); 
 			       		   scorePane.setPreferredSize( new Dimension( 310, 500 ) );
-			        	   HighScoreHandler highScoreList = new HighScoreHandler();
-			        	   highScoreList.addScore( new HighScore ("Stringer Bell", 24, 999 ));
-			        	   highScoreList.saveHighScores();
+			       		   MenuBar.highScoreList.sortScores();
+						   MenuBar.highScoreList.saveHighScores();
 			        	   scoreTextArea.setText( highScoreList.toString() );
 			        	   JOptionPane.showMessageDialog(null, scorePane, "High Scores",  
 			        	                                          JOptionPane.PLAIN_MESSAGE);

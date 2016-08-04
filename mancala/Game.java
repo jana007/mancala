@@ -14,7 +14,7 @@ public class Game {
 	private static String history = "";
 	private static int turnCounter = 0; 
 	private static int stoneHistory = 0;
-	private static HighScoreHandler highscoreList;
+
 	
 	public  Game() {
 		
@@ -80,6 +80,7 @@ public class Game {
 			playHistory( index, stoneHistory );
 		}
 		// if the player gets another turn, return true to continue game loop
+		checkForWinner();
 		if ( anotherTurn == true ) 
 			return true;
 		// else 
@@ -100,7 +101,6 @@ public class Game {
 		anotherTurn = false;
 		turn = ( turn + 1 ) % 2; // turn is either 0 ( for 1 ) or 1 ( for 2 )
 		validStartIndex = ( validStartIndex + 6 ) % 12 ; // valid start is either 0 or 6
-		checkForWinner();
 		return false; // player turn is over
 	}// end playTurn
 	
@@ -152,7 +152,7 @@ public class Game {
 			}
 			if ( emptyPits == 6 ) {
 				
-				collectEndGameBonus( ( i == 5 ) ? 6 : 0 ); 
+				collectEndGameBonus( ( i >= 5 ) ? 6 : 0 ); 
 				
 				String winner = ( PitsGraphicsPanel.playerStore[ 0 ].getStoneCount() > PitsGraphicsPanel.playerStore[ 1 ].getStoneCount() ) ? "one" : "two";
 				int winnerStoneAmount = PitsGraphicsPanel.playerStore[ ( winner == "one" ) ? 0 : 1 ].getStoneCount();
@@ -160,10 +160,13 @@ public class Game {
 				JOptionPane.showMessageDialog( null, "Game Over!\nPlayer " + winner + " Wins!" );
 				
 				 JFrame frame = new JFrame();
-				 String winnerName = JOptionPane.showInputDialog(frame, "Player " + winner + ", please enter your initials for the High Score List");
+				 String winnerName = JOptionPane.showInputDialog(frame, "New high score!\nPlayer " + winner + ", please enter your name");
 				 
-				 highscoreList = new HighScoreHandler();
-				 highscoreList.addScore( new HighScore( winnerName, turnCounter, winnerStoneAmount));
+				 MenuBar.highScoreList.addScore( new HighScore( winnerName, turnCounter, winnerStoneAmount));
+				 MenuBar.highScoreList.sortScores();
+				 MenuBar.highScoreList.saveHighScores();
+				 
+				// highscoreList.loadHighScores( );
 				
 				return true;
 			}
@@ -173,8 +176,9 @@ public class Game {
 	
 	public static void collectEndGameBonus( int bonusSideIndexStart ) {
 		
-		for (int i = bonusSideIndexStart; i < 6; ++i ) {
-			while ( PitsGraphicsPanel.playerPits[ i ].getStoneCount() != 0) 
+		for (int i = bonusSideIndexStart; i < ( bonusSideIndexStart + 5 ); i++ ) {
+			System.out.println(" i = " + i);
+			while ( PitsGraphicsPanel.playerPits[ i ].getStoneCount() > 0) 
 				PitsGraphicsPanel.playerStore[ ( bonusSideIndexStart % 5 ) ].incrementStoneCount( i );
 		}
 		MancalaTest.stonePaintGlassPane.repaint();

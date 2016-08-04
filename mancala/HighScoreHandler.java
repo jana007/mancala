@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HighScoreHandler {
 	
@@ -16,7 +17,17 @@ public class HighScoreHandler {
 	
 	public HighScoreHandler() {
 		highScores = new ArrayList< HighScore >();
+		highScores.ensureCapacity( 10 );
 		loadHighScores();
+		highScores.trimToSize();
+		
+		for ( int i = 12; i > 4; --i )
+			highScores.remove(i);
+		highScores.trimToSize();
+		
+		sortScores();
+		saveHighScores();
+		
 	}
      public void saveHighScores( ) {
 
@@ -34,11 +45,13 @@ public class HighScoreHandler {
 	        System.err.print("IOException");
 	        io.printStackTrace();
 	    }
+
 	}
      public void loadHighScores( ) {
 
          // create a read in object
          HighScore highScore = null;
+         highScores.clear();
          try {
              //make stream
              ObjectInputStream input = new ObjectInputStream( new FileInputStream( file ) );
@@ -65,11 +78,12 @@ public class HighScoreHandler {
          } catch ( ClassNotFoundException cn ) {
  	         System.err.print( "ClassNotFoundException" );
  	    }
+         
      }
      public void addScore( HighScore hs ) {
     	 
     	 highScores.add( hs );
-    	 saveHighScores( );
+
      }
      public String toString() {
     	 String scoreList = "";
@@ -86,8 +100,26 @@ public class HighScoreHandler {
      
      public void sortScores() {
     	 
+    	 boolean sorted = true;
+    	 HighScore swapTemp;
+    	 HighScore [] hsArray = new HighScore [ highScores.size() ];
+         hsArray = highScores.toArray(hsArray);
     	 
+    	 while ( sorted ) {
+    		sorted = false;
+    		for (int i = 0; i < hsArray.length - 1; ++i ) {
+    			System.out.println("size = " + hsArray.length );
+    			if ( hsArray[i].getScore()  < hsArray[ i + 1 ].getScore() ) {
+    				swapTemp = hsArray[ i ];
+    				hsArray[ i ] = hsArray[ i + 1 ];
+    				hsArray[ i + 1 ] = swapTemp;
+    				sorted = true;
+         		}
+    	     }
     	 
-     }
+          }
+    	 highScores.clear();
+    	 highScores = new ArrayList< HighScore >( Arrays.asList( hsArray));
+       }
      
 }
